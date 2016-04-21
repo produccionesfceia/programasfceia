@@ -1,0 +1,477 @@
+PRACTICA 1
+
+EJERCICIO 3
+#include <stdio.h>
+
+
+
+main(){
+
+float vector[100];
+int i,j,n;
+float *ptr;
+
+ptr=&vector[0];
+printf("Ingrese la cantidad de numeros que desea cargar al vector: ");
+scanf_s("%d",&n);
+	while(n>100){ //ciclo para exigir <100
+		printf("\nIngrese una cantidad menor que 100");
+		printf("\nIngrese cantidad de numeros: ");
+		scanf_s("%d",&n);
+	}
+
+// cargo vector
+	for(i=0;i<n;i++){
+		printf("\nIngrese el numero correspondiente a la siguiente posicion %d: ",i);
+		scanf_s("%f",&ptr[i]);
+	}
+// muestro vector
+	for (j=(n-1);j>=0;j--){
+	printf("\n El numero que corresponde a la posicion %d es %f", j, *(ptr+j));
+	}
+	getch();
+}
+
+EJERCICIO 4
+
+#include <stdio.h>
+
+
+char *diasemana(int ndia){
+	static char *semana[]= {"Dia no valido","Lunes", "Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+	return semana[ndia];
+}
+
+main(){
+int ndia;
+
+printf ("Ingrese el numero de dia: ");
+scanf_s(" %d",&ndia);
+while(ndia<0||ndia>7){
+	printf("\nDIA INVALIDO, INGRESELO NUEVAMENTE: ");
+	scanf_s("%d",&ndia);
+}
+if (ndia==0){
+	printf("%s\n",diasemana(ndia));
+}
+else{
+printf ("\n El dia %d ingresado corresponde a: %s", ndia, diasemana(ndia));
+}
+getch();
+}
+
+EJERCICIO 5
+
+#include <stdio.h>
+
+
+void importe(float kilos, float precio, float *imp_total){
+float ptr=0;
+ptr=(kilos*precio);
+	if (ptr>100)
+		ptr= (ptr*0.9);
+*imp_total=ptr;
+return;
+}
+
+main(){
+float kilos, precio;
+float ptr;
+
+printf("\n Ingrese la cantidad de kilos: ");
+scanf_s("%f",&kilos);
+printf("\n Ingrese el precio del producto: ");
+scanf_s("%f",&precio);
+importe(kilos,precio,&ptr);
+printf("\nEl precio es: %f", ptr);
+getch();
+
+}
+
+
+#include <stdio.h>
+
+void kilos(float *pk,float *pp, float *imp_total); 
+
+int main(){
+
+	float kg, precio;
+	float*pk;         //puntero a kg
+	float*pp;         //puntero a precio
+	float imp_total;
+	printf("ingrese el peso de la compra\n");
+	scanf_s(" %f",&kg);
+	printf("ingrese el precio/kg del producto\n");
+	scanf_s(" %f",&precio);
+	
+	pk=&kg;           //guarda la direccion en los punteros
+	pp=&precio;
+	kilos(pk,pp,&imp_total);
+	printf("El precio final de la compra es: %f",imp_total);
+	
+	getch();
+
+}
+void kilos(float *pk,float *pp, float *imp_total){
+	float final;
+
+	final=(*pk)*(*pp);	
+	if(final>100) final =(final*0.9);
+	*imp_total=final;
+	return;
+}
+
+
+*/
+
+EJERCICIO 9
+
+#include <stdio.h>
+
+
+int generamatriz(int n){
+	int fil=n;
+	int **matriz;
+	int col=n;
+	int i,j,k,l,m;
+	matriz=(int**)malloc(fil*sizeof(int*));
+	for (i=0;i<fil;i++){
+		matriz[i]=(int*)malloc(col*sizeof(int));
+		/*for(k=0;k<fil;k++){
+			for(j=0;j<col;j++){
+			matriz[i][j]=1;
+			
+		}*/
+	}
+			
+
+	/*for (l=0,m=0;l<n,m<n;l++,m++){
+			matriz[l][m]=1;
+			printf("%d \t", matriz[l][m]);
+			printf("\n");
+		}
+	*/	
+	for (l=0;l<fil;l++){
+		for(j=0;j<col;j++){
+			if(l==j){
+				matriz[l][j]=1;
+			}
+			else {
+				matriz[l][j]=0;
+			}
+			printf("%d\t", matriz[l][j]);
+		}
+		printf("\n");
+
+	}
+}
+	
+
+void main(){
+
+	int n; //almacena el valor de la dimension
+	
+
+	printf("\nIngrese el valor de n: ");
+	scanf_s(" %d", &n);
+	if (n<0) { //adquiri n = dimension matriz cuadrada 
+		printf("Ingrese un valor de n >0\n");
+		printf("\nIngrese el valor de n: ");
+		scanf_s(" %d", &n);
+	}
+
+	generamatriz(n);
+	getch();
+	
+
+}
+
+EJERCICIO 10
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int determinante(int n, int **matriz);
+
+void main(){
+int n=0,i,j,val;
+int **matriz=NULL;
+
+printf("Ingrese la dimension de la matriz:");
+scanf_s("%d",&n);
+while(n<0){ //verifica si la dimension es positiva!
+printf("\nLa dimension debe ser un numero positivo");
+printf("\nIngrese la dimension de la matriz:");
+scanf_s("%d",&n);
+}
+
+//asigno memoria para la matriz
+matriz=(int**)malloc(n*sizeof(int*));
+	for(i=0;i<n;i++){
+		matriz[i]=(int*)malloc(n*sizeof(int*));
+	}
+
+//cargo la matriz con valores
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			printf("\n Ingrese un valor para la posicion[%d][%d]:",i,j);
+			scanf_s("%d",&val);
+			matriz[i][j]=val;
+		}
+	}
+
+//imprimo la matriz
+	printf("\tLA MATRIZ CARGADA ES\t \n");
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			printf("%d\t", matriz[i][j]);
+		}
+	printf("\n");
+		}
+
+//calculo el determinante mediante la funcion
+	determinante(n,matriz);
+	printf("%d",determinante(n,matriz)); //imprimo el determinante 
+getch();
+}
+
+int determinante(int n, int **matriz){
+int det;
+		
+if(n==2){
+det = ((matriz[0][0]*matriz[1][1])-(matriz[0][1]*matriz[1][0]));
+}
+else{
+det=((matriz[0][0]*matriz[1][1]*matriz[2][2])+(matriz[0][1]*matriz[1][2]*matriz[2][0])+(matriz[0][2]*matriz[1][0]*matriz[2][1])-(matriz[2][0]*matriz[1][1]*matriz[0][2])-(matriz[2][1]*matriz[1][2]*matriz[0][0])-(matriz[2][2]*matriz[1][0]*matriz[0][1]));
+}
+
+printf("%d\n",det);
+return det;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int ** producto_Escalar_Matriz(int fil, int col, int esc, int **matriz);
+
+void main(){
+int fil,col,esc, i,j;
+int **matriz=NULL;
+int **matriz1;
+
+
+
+printf("Ingrese la cantidad de filas de la matriz:");
+scanf_s(" %d",&fil);
+printf("\nIngrese la cantidad de columnas de la matriz:");
+scanf_s(" %d",&col);
+printf("\nIngrese un escalar: ");
+scanf_s(" %d",&esc);
+
+matriz1=producto_Escalar_Matriz(fil,col,esc,matriz);
+
+printf("\nLA MATRIZ MULTIPLICADA POR EL ESCALAR ES:\n");
+//imprimo en pantalla
+for(i=0;i<fil;i++){
+		for(j=0;j<col;j++){
+			printf(" %d\t", matriz1[i][j]);
+		}
+	printf("\n");
+	}
+getch();
+}
+
+int ** producto_Escalar_Matriz(int fil, int col, int esc, int **matriz){
+int i,j;
+
+//asigno memoria para la matriz
+matriz=(int**)malloc(fil*sizeof(int*));
+	for(i=0;i<fil;i++){
+		matriz[i]=(int*)malloc(col*sizeof(int*));
+	}
+
+//cargo la matriz con valores
+	for(i=0;i<fil;i++){
+		for(j=0;j<col;j++){
+			matriz[i][j]=rand()%255;
+		}
+	}
+
+//imprimo la matriz en pantalla
+	printf("\tLA MATRIZ GENERADA ALEATORIAMENTE ES\t \n");
+	for(i=0;i<fil;i++){
+		for(j=0;j<col;j++){
+			
+			printf("%d\t", *(*(matriz+i)+j));
+		}
+	printf("\n");
+	}
+
+//multiplico al escalar por cada elemento de la matriz
+for(i=0;i<fil;i++){
+		for(j=0;j<col;j++){
+			*(*(matriz+i)+j) =*(*(matriz+i)+j)*esc;
+		}
+	}
+
+/* /imprimo la matriz en pantalla
+	printf("\tLA MATRIZ multiplicada dentro de la funcion vale\n");
+	for(i=0;i<fil;i++){
+		for(j=0;j<col;j++){
+			//printf("%d\t", *(*matriz+i)+j);
+			printf("%d\t", *(*(matriz+i)+j));
+		}
+	printf("\n");
+	}
+*/ 
+return (matriz);
+}
+
+EJERCICIO 12
+
+// EJERCICIO 12 PRACTICA 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int validacion_ip (char *dir);
+
+main(){
+
+int valor=0;
+//int *val=valor;
+char direccion[]= "192.168.1.1";
+char *dir =&direccion;
+
+
+valor=validacion_ip (dir);
+printf("\n%d",valor);
+getch();
+
+
+}
+
+int validacion_ip (char *dir){
+char aux[5]; //arreglo auxiliar para almacenar los bloques de la direccion ip
+char *aux1=&aux;
+int valor=1; //devuelve 1 o 0 para indicar un true or false
+int long_dir=strlen(dir);
+int n=0,i;
+char *copia_direccion;
+char bloq1[4], bloq2[4], bloq3[4], bloq4[4];
+int validador=1;
+int global=0;
+int contador=0;
+// ciclo para cargar cada bloque
+while(contador<long_dir){
+	for(i=0;i<4;i++){ //bloque 1
+		if(dir[i]!='.'){
+			bloq1[i]=dir[i];
+		}
+		else bloq1[i]='\0';
+		contador=contador+i;
+		n=n+1;
+	}
+	for(i=n;i<4;i++){ //bloque2
+		if(dir[i]!='.'){
+			bloq2[i]=dir[i];
+		}
+		else bloq2[i]='\0';
+		contador=contador+i;
+		n=n+1;
+	}
+	for(i=n;i<4;i++){ //bloque3
+		if(dir[i]!='.'){
+			bloq3[i]=dir[i];
+		}
+		else bloq3[i]='\0';
+		contador=contador+i;
+		n=n+1;
+	}
+	for(i=n;i<4;i++){ //bloque4
+		if(dir[i]!='.'){
+			bloq4[i]=dir[i];
+		}else bloq4[i]='\0';
+		
+		contador=contador+i;
+		n=n+1;
+	}
+}
+printf("cadena1: %s",bloq1);
+printf("cadena2: %s",bloq2);
+printf("cadena3: %s",bloq3);
+printf("cadena4: %s",bloq4);
+
+
+strncpy(aux1,dir,4);
+aux[4]= '\0';
+valor = atoi(aux);
+printf("\n%s",aux1);
+printf("\n%d",valor);
+if (valor<255) valor=1;
+strncpy(aux,dir+8,4);
+aux[4]= '\0';
+valor = atoi(aux);
+printf("\n%s",aux);
+printf("\n%d",valor);
+if (valor<255) valor=1;
+
+return valor; 
+}
+
+
+
+
+
+
+
+
+/* SEGUNDA VERSION
+int validacion_ip(char ip[]);
+char * getstring(){
+	char *s,c;
+	int i=0;
+	s=(char*)malloc(sizeof(char));
+	while((c=getchar())!='\n'){
+		s[i]=c;
+		i++;
+		s=(char*)realloc(s,sizeof(char)*(i+1));
+	}
+	s[i]='\0';
+	return s;
+}
+
+main(){
+	int opc, i=2,j=0, cont=1, tamanio;
+	char c, *oracion, *s;
+	printf("Ingrese la opcion que desee validar: \n 1- Validacion IP \n 2- Validacion Correo \n 3- Validacion Tarjeta de Credito");
+	printf("\nIngrese opcion: ");
+	scanf("%d",&opc);
+	
+	switch (opc){
+		case 1:
+			printf("\nIngrese direccion IP: ");
+			oracion=(char)malloc(sizeof(char));
+			while((oracion[j]=getchar())!='\n'){
+			oracion=(char*)realloc(oracion,sizeof(char)*i);
+			i++;
+			j++;
+			}
+			oracion[j]='\0';
+
+			printf("\n la cadena que ingreso es : %s",oracion);
+			
+			break;
+		default: 
+			printf("\n Instruccion por default");
+	}
+	getch();
+}
+
+
+int validacion_ip(char ip[]){
+}
+
+*/
+
+
