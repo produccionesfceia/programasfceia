@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int unsigned setBits(unsigned x, int p){
+	int i, j, puntero = 7 + p;
+	for (i=0;i<p;i++){
+		x=x<<1; //muevo a izq todo 1 bit ...
+			/*if((x<<(8+i))&1){ //pregunto si ahora encuento un 1
+				x = 0<<(i+7);
+				printf("hol");
+			}*/
+		printf(" %d \n", x);
+		}
+	for (j=7;j<puntero;j++){
+		x =  (0<<j);
+		printf("\n %d",x);
+	}
+			/*if ((x<<8)&1){
+				x = (x ^ (1<<i+7));
+				printf("punt\n");
+	}*/
+	
+	return (x);
+}
+
+
+main(){
+	unsigned x;
+	int p, xp;
+	x = 0xB4;
+	printf("\n Ingrese la cantidad de bits que deseaa desplazar a izq: ");
+	scanf(" %d", &p);
+	while (p > 7){
+		printf("\n Ingrese una cantidad de bits mayor o igual que 7");
+		printf("\n Vuelva a ingresar los bits a desplazar: ");
+		scanf(" %d", &p);
+	}
+	printf("\n El numero desplazado a izq es: %d", setBits(x,p));
+	getch();
+}

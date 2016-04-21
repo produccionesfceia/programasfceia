@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+#define minimo2(a,b) ((a<b)? a:b)
+#define minimo3 (c,  minimo2(a,b)) ((c<minimo2(a,b))? c : minimo2(a,b))
+main(){
+	int x, y, z,a,b,c, valormin, aux;
+	printf(" Ingrese el primer numero: ");
+		scanf(" %d", &x);
+	printf(" Ingrese el segundo numero: ");
+		scanf(" %d", &y);
+	printf(" Ingrese el tercer numero: ");
+		scanf(" %d", &z);
+	//valormin = minimo2(x,y);
+	aux= minimo3(z,minimo2(x,y));
+	printf("el minimo es %d", aux);
+	getchar();
+		getchar();
+
+}

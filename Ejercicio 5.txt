@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+
+
+int main (){
+
+char a =75;
+char b=8;
+char res;
+printf(" a= %d b= %d", a,b);
+res= a&b;
+printf(" %d", res);
+if (a&b)
+printf("es un 1");
+else printf("es un cero");
+getch();
+}

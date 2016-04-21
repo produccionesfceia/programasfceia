@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+// se me pide que el numero x tenga en el bit menos significativo un 0 por eso eligo el numero B4
+
+int unsigned rightRot(unsigned x, int n){
+	int i;
+	for (i=0; i<n;i++){
+		if((x & 1) == 0) //el bit es un cero
+			x = x>>1;
+		else { // el bit es un uno
+			x = x>>1;
+			x= x | 0x80; // con el 0x80 lo que hago es hacer un or y poder asignar un 1 adelante del todo
+		}
+	}
+	return x;
+}
+
+
+main(){
+	unsigned x;
+	int n;
+
+	x=0xB4; //numero en hexadecimal que voy a rotar a derecha
+	printf("Ingrese la cantidad de bits que desea rotar a derecha: ");
+	scanf(" %d", &n);
+	printf("El numero rotado a derecha es: %d", rightRot(x,n));
+	getch();
+
+}

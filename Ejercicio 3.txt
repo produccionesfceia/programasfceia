@@ -1,0 +1,48 @@
+#include <stdio.h>
+ // ejercicio 3
+
+
+int main(){
+	int vector [5];
+	int cant_lluvia;
+	int i, j;
+	int mayor_lluvia; //almacena la cantidad de lluvia
+	int menor_lluvia; // almacena la cantidad de menor lluvia
+	int marcador; //para saber el dia que llovio mas
+	int menormarcador; //para saber que dia llovio menos
+
+	for( i=0; i<5; i++){
+		printf (" \n Ingrese el valor de lluvia: ");
+		scanf (" %d", &cant_lluvia);
+		vector[i] = cant_lluvia;
+		//printf ("El valor de lluvia es: %d \n", cant_lluvia);
+	}
+	getchar();
+	mayor_lluvia = vector[0];
+	menor_lluvia = vector[0];
+
+	for(i=0; i<5; i++)
+		if (mayor_lluvia <= vector[i]){
+			mayor_lluvia = vector [i];
+			marcador = i;
+		}
+		else{
+		mayor_lluvia = vector[0];
+		marcador = i;
+		}
+	for (j=0; j<5; j++)
+		if (vector[j] <= menor_lluvia){
+			menor_lluvia = vector[j];
+			menormarcador = j;
+		}
+		else {
+			menor_lluvia = vector [0];
+			marcador = j;
+		}
+		printf ("El dia que mas llovio fue %d \t y llovio: %d mm \n", marcador, mayor_lluvia);
+		printf ("El dia que menos llovio fue %d \t y llovio: %d mm \n", menormarcador, menor_lluvia);
+		//getchar();
+		getchar();
+		
+
+}
