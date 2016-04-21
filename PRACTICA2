@@ -1,0 +1,387 @@
+EJERCICIO 1 - FALTA TERMINAR FUNCIONES 
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
+
+typedef struct{
+	int n;
+	double *coeficiente;
+}polinomio;
+
+polinomio *creapolinomio(int orden);
+void setcoef(int n, double c, polinomio *p);
+double getcoef(int n, polinomio *p);
+double especializa(double x, polinomio *p);
+polinomio *sum(polinomio *p1, polinomio *p2);
+int main(){
+	polinomio *pol, *pol2;
+	int orden, n, i;
+	double valor, retorno_pol, x, pol_evaluado_en_x;
+	printf("\nCreacion del polinomio!");
+	printf("\nIngrese orden del polinomio: ");
+	scanf("%d",&orden);
+	pol=creapolinomio(orden);
+	printf("\nCreacion del polinomio!");
+	printf("\nIngrese orden del polinomio: ");
+	scanf("%d",&orden);
+	pol2=creapolinomio(orden);
+	/*printf("\nModificacion de un termino del polinomio!");
+	printf("\nIngrese el n-esimo termino que quiere modificar: ");
+	scanf("%d",&n);
+	while(n>(orden)||n<0){
+		printf("\nEl termino que quiere modificar no existe");
+		printf("\nIngrese el termino nuevamente: ");
+		scanf("%d",&n);
+	}
+	printf("Ingrese el valor que desea: ");
+	scanf("%lf",&valor);
+	setcoef(n,valor,pol);
+	printf("\nPolinomio modificado: ");
+	for(i=0;i<(orden+1);i++){
+		printf("grado x^[%d]: %lf ",(i),pol->coeficiente[i]);
+		
+	}
+	printf("\nRetornar un valor del polinomio!");
+	printf("\nIngrese el n-esimo termino que quiere retornar: ");
+	scanf("%d",&n);
+	while(n>(orden)||n<0){
+		printf("\nEl termino que quiere modificar no existe");
+		printf("\nIngrese el termino nuevamente: ");
+		scanf("%d",&n);
+	}
+	retorno_pol=getcoef(n,pol);
+	printf("\nEl n-esimo termino retornado es:%lf",retorno_pol);
+	
+	printf("\nCalculo del polinomio en X");
+	printf("\nIngrese el valor de x donde quiere evaluar el polinomio: ");
+	scanf("%lf",&x);
+	pol_evaluado_en_x=especializa(x,pol);
+	printf("\nEl valor del polinomio ""p"" evaluado en x=%lf es: %lf",x,pol_evaluado_en_x);
+	*/
+	sum(pol,pol2);
+	getch();
+
+}
+
+polinomio *creapolinomio(int orden){ //dentro de esta funcion creo y devuelvo un polinomio de orden n, ya cargado!
+	int i;
+	polinomio *p1;
+	p1=(polinomio*)malloc(sizeof(polinomio));
+	p1->n=(orden);
+	p1->coeficiente=(double*)malloc((orden+1)*sizeof(double));
+
+	printf("\nCarga del polinomio");
+	for(i=0;i<(orden+1);i++){
+		printf("\nIngrese el valor del orden x^[%d]: ",i);
+		scanf("%lf",&p1->coeficiente[i]);
+	}
+	printf("\nPolinomio:");
+	for(i=0;i<(orden+1);i++){
+		printf("\ngrado x^[%d]: %lf ",(i),p1->coeficiente[i]);
+	}
+	return p1;
+}
+
+void setcoef(int n, double c, polinomio *p){
+
+	p->coeficiente[n]=c;
+}
+
+double getcoef(int n, polinomio *p){
+	double aux;
+	aux=p->coeficiente[n];
+	return aux;
+}
+
+double especializa(double x, polinomio *p){
+	int i, cant_elementos;
+	double valor=0;
+	cant_elementos=sizeof(p->coeficiente);
+	printf("\n Cantidad de elementos del arreglo:%d", cant_elementos); //para saber cuantos elementos tengo
+	for(i=0;i<(cant_elementos);i++){
+		valor=valor+(p->coeficiente[i]*pow(x,i));
+	}
+	
+	return valor;
+}
+
+polinomio *sum(polinomio *p1, polinomio *p2){
+	int ord1, ord2,orden, i;
+	polinomio *sum;
+	ord1=(p1->n); //ord1 y ord2 sirven para saber si los pol son =, o alguno es "<" o ">" que otro pol /para despues retornar el polinomio final
+	ord2=(p2->n);
+	printf("ord1: %d, ord2:%d",ord1,ord2);
+	if(ord1<ord2){
+		orden=ord2;
+	}else if(ord1>ord2){
+		orden=ord1;
+	}else{ //en este punto los ordenes deberian ser iguales!
+		orden=ord1;
+	}
+	sum=(polinomio*)malloc(sizeof(polinomio));
+	sum->coeficiente=(double*)malloc((orden+1)*sizeof(double));
+	sum->n=(orden);
+	printf("\npol 1:%.2lf, pol2:%.2lf",p1->coeficiente[1],p2->coeficiente[1]);
+	for(i=0;i<(orden+1);i++){
+		sum->coeficiente[i]=0;
+	}
+	for(i=0;i<(orden+1);i++){
+		printf("\nvalor pol1:%.2lf",p1->coeficiente[i]);
+		printf("\nvalor pol2:%.2lf",p2->coeficiente[i]);
+		printf("\nvalor suma antes:%.2lf",sum->coeficiente[i]);
+		sum->coeficiente[i]= sum->coeficiente[i]+p1->coeficiente[i]+p2->coeficiente[i];
+		printf("\nEl valor de la suma en el coeficiente %d es:%.2lf",i,*(sum->coeficiente+i));
+	}
+	
+	return sum;
+
+}
+
+
+EJERCICIO 4
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
+# include <string.h>
+
+typedef struct TipoPunto TipoPunto;
+typedef struct TipoCiudad TipoCiudad;
+
+struct TipoPunto{
+	float abscisa; //x
+	float ordenada; //y
+};
+
+struct TipoCiudad{
+	struct TipoPunto situacion;
+	char nombre[50];
+};
+
+void reordenar(TipoCiudad ciudades[], int num_ciudades, int opc);
+
+ main(){
+	int i, opc, num_ciudades;
+
+	//double absisa, ordenada;
+	TipoCiudad *ciudades;
+	printf("\n Ingrese la cantidad de ciudades que desea ingresar: ");
+	scanf("%d",&num_ciudades);
+	ciudades=(TipoCiudad*)malloc(num_ciudades*sizeof(TipoCiudad*));
+	for (i=0;i<num_ciudades;i++){
+		printf("\n Ingrese nombre de la ciudad [%d]: ",i);
+		scanf("%s",&ciudades[i].nombre);
+		printf("\n Ingrese abscisa y ordenada con formato abs ord: ");
+		scanf("%f %f",&ciudades[i].situacion.abscisa, &ciudades[i].situacion.ordenada);
+}
+	for (i=0;i<num_ciudades;i++){
+		printf("\n Nombre [%d]:%s ",i, ciudades[i].nombre);
+		printf("\n absisa %f , ordneada %f", ciudades[i].situacion.abscisa, ciudades[i].situacion.ordenada);
+	}
+	printf("\n Lista de Nombres de las ciudades");
+	for (i=0;i<num_ciudades;i++){
+		printf("\n ciudad[%d]: %s",i,ciudades[i].nombre);
+	}
+	//preguntar por pasar el nombre
+	printf("\n Ingrese el numero de la ciudad que desee: ");
+	scanf("%d", &opc); 
+	reordenar(ciudades,num_ciudades,opc);
+	printf("\n \a FIN PROGRAMA");
+	getch();
+ }
+
+ void reordenar(TipoCiudad ciudades[], int num_ciudades,int opc){
+	 TipoCiudad temp[1];
+	 int n=0, condicion, punt, i,j;
+	 
+	 while(opc>num_ciudades){
+		 printf("\n CIUDAD INCORRECTA. REINGRESE CIUDAD\n");
+		 printf("\n Ingrese el nombre de la ciudad que desee: ");
+		 scanf("%d", &opc); 
+	 }
+		strcpy(temp[0].nombre,ciudades[0].nombre);
+		temp[0].situacion.abscisa=ciudades[0].situacion.abscisa;
+		temp[0].situacion.ordenada=ciudades[0].situacion.ordenada;
+		
+		strcpy(ciudades[0].nombre,ciudades[opc].nombre);
+		ciudades[0].situacion.abscisa=ciudades[opc].situacion.abscisa;
+		ciudades[0].situacion.ordenada=ciudades[opc].situacion.ordenada;
+		strcpy(ciudades[opc].nombre,temp[0].nombre);
+		ciudades[opc].situacion.abscisa=temp[0].situacion.abscisa;
+		ciudades[opc].situacion.ordenada=temp[0].situacion.ordenada;
+		
+		 
+		 for(i=1;i<num_ciudades;i++){
+			 for(j=1;j<num_ciudades-1;j++){
+				 if(sqrt(pow((ciudades[j].situacion.abscisa-ciudades[0].situacion.abscisa),2)+pow((ciudades[j].situacion.ordenada-ciudades[0].situacion.ordenada),2))>
+					 sqrt(pow((ciudades[j+1].situacion.abscisa-ciudades[0].situacion.abscisa),2)+pow((ciudades[j+1].situacion.ordenada-ciudades[0].situacion.ordenada),2))){
+						
+						strcpy(temp[0].nombre,ciudades[j].nombre);
+						temp[0].situacion.abscisa=ciudades[j].situacion.abscisa;
+						temp[0].situacion.ordenada=ciudades[j].situacion.ordenada;
+
+						strcpy(ciudades[j].nombre,ciudades[j+1].nombre);
+						ciudades[j].situacion.abscisa=ciudades[j+1].situacion.abscisa;
+						ciudades[j].situacion.ordenada=ciudades[j+1].situacion.ordenada;
+
+						strcpy(ciudades[j+1].nombre,temp[0].nombre);
+						ciudades[j+1].situacion.abscisa=temp[0].situacion.abscisa;
+						ciudades[j+1].situacion.ordenada=temp[0].situacion.ordenada;
+				 }
+			 }
+		 }
+		 printf("\n Lista de Nombres de las ciudades");
+		 for (i=0;i<num_ciudades;i++){
+		printf("\n ciudad[%d]: %s",i,ciudades[i].nombre);
+		 }
+ }
+	 
+EJERCICIO 5
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
+# include <string.h>
+
+typedef struct matrix matrix;
+struct matrix{
+	int filas,col;
+	int **matriz;
+};
+
+void crea_matriz(struct matrix* mat );
+int **suma_matriz(struct matrix* mat_1, struct matrix* mat_2, int **resultado);
+main(){
+	int i,j,n=0;
+	matrix mat1, mat2;
+	int **resultado;
+	srand(time(NULL));
+	printf("Ingrese el numero de filas de la matriz: ");
+	scanf("%d", &mat1.filas );
+	printf("\nIngrese el numero de columnas de la matriz: ");
+	scanf("%d", &mat1.col);
+	crea_matriz(&mat1);
+	printf("\nIngrese el numero de filas de la matriz 2: ");
+	scanf("%d", &mat2.filas );
+	printf("\nIngrese el numero de columnas de la matriz 2: ");
+	scanf("%d", &mat2.col);
+	crea_matriz(&mat2);
+	if(mat1.filas!=mat2.filas || mat1.col!=mat2.col){
+		printf("\n DIMENSIONES DISTINTAS. NO SE PUEDE SUMAR\n");
+	}else{
+		resultado=suma_matriz(&mat1,&mat2,&resultado);
+	}
+	//imprimo la matriz suma 
+	printf("\n VALORES DE LA MATRIZ SUMA EN MAIN!!!!!\n");
+	for(i=0;i<mat1.filas;i++){
+		for(j=0;j<mat1.col;j++){
+			printf("%d \t ", *(*(resultado+i)+j));
+		}
+		printf("\n");
+	}
+		
+
+	getch();
+}
+
+
+void crea_matriz(struct matrix* mat ){
+	int i,j;
+	
+	mat->matriz=(int**)malloc((mat->filas)*sizeof(int*));
+	for (i=0;i<mat->filas;i++){
+		*(mat->matriz+i)=(int*)malloc((mat->col)*sizeof(int*));
+	}
+	
+	for(i=0;i<mat->filas;i++){
+		for(j=0;j<mat->col;j++){
+			*(*(mat->matriz+i)+j)= rand()%100;
+		}
+	}
+	printf("\n VALORES DE LA MATRIZ ALEATORIA\n");
+	for(i=0;i<mat->filas;i++){
+		for(j=0;j<mat->col;j++){
+			printf("%d \t ", *(*(mat->matriz+i)+j));
+		}
+		printf("\n");
+	}
+}
+
+int **suma_matriz(struct matrix* mat_1,struct matrix* mat_2, int **resultado){
+	int i,j;
+	resultado=(int**)malloc((mat_1->filas)*sizeof(int*));
+	for(i=0;i<mat_1->col;i++){
+		*(resultado+i)=(int*)malloc((mat_1->col)*sizeof(int*));
+	}
+	for(i=0;i<(mat_1->filas);i++){
+		for(j=0;j<(mat_1->col);j++){
+			*(*(resultado+i)+j)=(*(*(mat_1->matriz+i)+j)+*(*(mat_2->matriz+i)+j));
+		}
+	}
+	
+	return (resultado);
+
+}
+
+EJERCICIO 8
+
+# include <stdio.h>
+# include <stdlib.h>
+
+typedef unsigned char byte; //definicion de byte
+
+typedef union{
+	byte caracter;
+	struct{
+		unsigned char bit0:1;
+		unsigned char bit1:1;
+		unsigned char bit2:1;
+		unsigned char bit3:1;
+		unsigned char bit4:1;
+		unsigned char bit5:1;
+		unsigned char bit6:1;
+		unsigned char bit7:1;
+	}bits; //definicion de estructura bits
+}campo;
+
+char *cambio(char cadena[]);
+
+void main(){
+
+	int i=0; //contador para el primer ciclo do - while
+	unsigned char cadena[100], *oracion2;
+	printf("tamaño original de cadena %d",sizeof (cadena));
+	printf("\nIngrese una cadena de texto: ");
+	scanf("%s", &cadena);
+	oracion2=cambio(cadena);
+	for(i=0;i<strlen(cadena);i++){
+		printf("\n%c",*(oracion2+i));
+	}
+		
+	getch();
+}
+
+char *cambio(char cadena[]){
+	campo aux;
+	int i, longitud;
+	char *cadena2;
+	longitud=strlen(cadena);
+	
+	cadena2=(char*)malloc(strlen(cadena)*(sizeof(char*))); //cadena modificada que voy a retornar
+	
+	for(i=0;i<strlen(cadena);i++){
+		aux.caracter=cadena[i];
+		printf("\n caracter original: %c",cadena[i]);
+		aux.bits.bit1=~aux.bits.bit1;
+		aux.bits.bit3=~aux.bits.bit3;
+		aux.bits.bit5=~aux.bits.bit5;
+		aux.bits.bit7=~aux.bits.bit7;
+		*(cadena2+i)=aux.caracter;
+		printf("\n caracter modificado: %c",*(cadena2+i));
+	}
+	
+	return cadena2;
+}
+
+
+
+
